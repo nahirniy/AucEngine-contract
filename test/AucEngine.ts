@@ -4,7 +4,7 @@ const { loadFixture } = require("@nomicfoundation/hardhat-toolbox/network-helper
 
 describe("AucEngine", function () {
   async function deploy() {
-    [owner, seller, buyer] = await ethers.getSigners();
+    const [owner, seller, buyer] = await ethers.getSigners();
 
     const AucEngine = await ethers.getContractFactory("AucEngine", owner);
     const auct = await AucEngine.deploy();
@@ -21,7 +21,7 @@ describe("AucEngine", function () {
     expect(currentOwner).to.eq(owner.address);
   });
 
-  async function getTimestamp(bn) {
+  async function getTimestamp(bn: number) {
     return (await ethers.provider.getBlock(bn)).timestamp;
   }
 
@@ -44,13 +44,13 @@ describe("AucEngine", function () {
     });
   });
 
-  function delay(ms) {
+  function delay(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   describe("buy", function () {
     it("allows to buy", async function () {
-      const { auct } = await loadFixture(deploy);
+      const { seller, buyer, auct } = await loadFixture(deploy);
       await auct
         .connect(seller)
         .createAuction(ethers.parseEther("0.0001"), 3, "fake item", 60);
