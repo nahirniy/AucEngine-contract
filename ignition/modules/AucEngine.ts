@@ -7,9 +7,7 @@ const AucEngineModule = buildModule("AucEngineModule", (m) => {
   const unlockTime = m.getParameter("unlockTime", JAN_1ST_2030);
   const lockedAmount = m.getParameter("lockedAmount", ONE_GWEI);
 
-  const lock = m.contract("Lock", [unlockTime], {
-    value: lockedAmount,
-  });
+  const lock = m.contract("AucEngine");
 
   return { lock };
 });
